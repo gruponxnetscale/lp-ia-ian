@@ -134,6 +134,9 @@ input::placeholder{color:#5b6170;}
           <sc-if value="{{ result.hasSecondary }}" hint-placeholder-val="{{ false }}">
             <button onClick="{{ result.secondaryGo }}" style="background:none;border:1px solid rgba(255,255,255,.12);cursor:pointer;border-radius:999px;padding:11px;min-height:46px;color:#c9cdd6;font:600 13.5px 'Outfit',sans-serif;" style-hover="border-color:rgba(59,130,246,.55);color:#fff;">{{ result.secondary }}</button>
           </sc-if>
+          <sc-if value="{{ result.hasTertiary }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ result.tertiaryGo }}" style="background:none;border:none;cursor:pointer;padding:8px;color:#8b93a7;font:500 13px 'Outfit',sans-serif;text-decoration:underline;" style-hover="color:#fff;">{{ result.tertiary }}</button>
+          </sc-if>
         </div>
       </sc-if>
     </div>
@@ -195,7 +198,7 @@ const INTRO = [
 const DELAY = 1000;
 const DRAFT_KEY = 'lpian_quiz_rascunho_v1';
 const DRAFT_TTL = 30 * 60 * 1000;
-const DRAFT_FIELDS = ['msgs', 'step', 'name', 'a', 'obj', 'site', 'result', 'direct', 'ramo', 'ddi', 'phone', 'hist', 'sid', 't0', 'destinoKey', 'clicou'];
+const DRAFT_FIELDS = ['msgs', 'step', 'name', 'a', 'obj', 'site', 'result', 'direct', 'ramo', 'ddi', 'phone', 'hist', 'sid', 't0', 'destinoKey', 'clicou', 'ag'];
 const loadDraft = () => {
   try {
     const d = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null');
@@ -491,8 +494,23 @@ class Component extends DCLogic {
     const zap = (nome, num, txt) => () => { this.wa(num, txt); reg(nome); };
     if (r.key === 'nx') return { ...r, hasSecondary: false, primaryGo: zap('whatsapp_nx', CONFIG.whatsappNX, 'Oi! Sou ' + n + ', respondi o diagnóstico e quero *conversar* sobre ' + assunto + '.') };
     if (r.key === 'ian') return { ...r, hasSecondary: false, primaryGo: zap('whatsapp_ian', CONFIG.whatsappIan, 'Oi Ian! Sou ' + n + ', respondi o diagnóstico e quero *conversar* sobre ' + assunto + '.') };
-    const agendar = CONFIG.agendaGoogle ? () => { window.open(CONFIG.agendaGoogle, '_blank'); reg('agenda'); } : zap('agenda_whatsapp', CONFIG.whatsappNX, 'Oi Ian! Sou ' + n + ', respondi o diagnóstico e quero *agendar a reunião de 30 min* sobre ' + assunto + '. Qual o melhor horário?');
-    return { ...r, hasSecondary: true, primaryGo: agendar, secondaryGo: zap('whatsapp_nx', CONFIG.whatsappNX, 'Oi Ian! Sou ' + n + ', respondi o diagnóstico e quero *conversar pelo WhatsApp* sobre ' + assunto + '.') };
+    const ag = this.state.ag;
+    const zapNX = zap('whatsapp_nx', CONFIG.whatsappNX, 'Oi Ian! Sou ' + n + ', respondi o diagnóstico e quero *conversar pelo WhatsApp* sobre ' + assunto + '.');
+    if (CONFIG.agendaGoogle && ag === 'aguardando') {
+      const abrir = () => { window.open(CONFIG.agendaGoogle, '_blank'); };
+      const confirmar = () => {
+        const tel = this.state.a.whatsapp || '';
+        this.setState({ ag: 'ok', clicou: 'agendou_confirmado' }, () => this.track('clique', { etapa: 'agendado', clicou: 'agendou_confirmado' }));
+        this.say({ bot: true, pre: '', hl: 'Agendado, ' + n + '! ✅', post: ' Vou te mandar uma mensagem em breve no seu WhatsApp' + (tel ? ' (' + tel + ')' : '') + ' pra confirmar tudo.' }, null, 600);
+      };
+      return { ...r, primary: 'Já agendei', primaryGo: confirmar, hasSecondary: true, secondary: 'Abrir a agenda de novo', secondaryGo: abrir, hasTertiary: true, tertiary: 'Prefiro falar no WhatsApp', tertiaryGo: zapNX };
+    }
+    const agendar = CONFIG.agendaGoogle ? () => {
+      window.open(CONFIG.agendaGoogle, '_blank');
+      this.setState({ ag: 'aguardando', clicou: 'agenda' }, () => this.track('clique', { etapa: 'clique', clicou: 'agenda' }));
+      this.say({ bot: true, pre: 'Abri a agenda em outra aba. Escolha o melhor horário e, quando terminar, volte aqui e toque em ', hl: '“Já agendei”', post: '.' }, null, 700);
+    } : zap('agenda_whatsapp', CONFIG.whatsappNX, 'Oi Ian! Sou ' + n + ', respondi o diagnóstico e quero *agendar a reunião de 30 min* sobre ' + assunto + '. Qual o melhor horário?');
+    return { ...r, hasSecondary: true, primaryGo: agendar, secondaryGo: zapNX };
   }
   renderVals() {
     const opts = this.options().map(o => ({ ...o, bg: o.pre ? 'rgba(59,130,246,.12)' : '#0f131b', border: o.pre ? 'rgba(59,130,246,.7)' : 'rgba(255,255,255,.09)' }));
@@ -520,7 +538,7 @@ class Component extends DCLogic {
       hasOptions: opts.length > 0,
       hasChips: opts.length > 0 && chips,
       hasList: opts.length > 0 && !chips,
-      hasResult: this.state.step === 'done' && !!this.state.result,
+      hasResult: this.state.step === 'done' && !!this.state.result && this.state.ag !== 'ok',
       result: this.resultActions(this.state.result),
       typing: this.state.typing,
       showSite: this.state.step === 'site',
@@ -529,7 +547,7 @@ class Component extends DCLogic {
       onSiteKey: e => { if (e.key === 'Enter') this.submitSite(); },
       submitSite: this.submitSite,
       skipSite: this.skipSite,
-      restart: () => { clearTimeout(this.t); this.gen = (this.gen || 0) + 1; this.played = 0; this.setState({ nameErr: false, siteErr: false, msgs: [], step: 'wait', name: '', result: null, a: {}, site: '', obj: null, typing: false, hist: [], destinoKey: '', clicou: '', sid: newSid(), t0: new Date().toISOString() }, () => this.intro()); },
+      restart: () => { clearTimeout(this.t); this.gen = (this.gen || 0) + 1; this.played = 0; this.setState({ nameErr: false, siteErr: false, msgs: [], step: 'wait', name: '', result: null, a: {}, site: '', obj: null, typing: false, hist: [], destinoKey: '', clicou: '', ag: '', sid: newSid(), t0: new Date().toISOString() }, () => this.intro()); },
       accOpen: this.state.accOpen,
       accIcon: this.state.accOpen ? '−' : '+',
       toggleAcc: () => this.setState(s => ({ accOpen: !s.accOpen })),
