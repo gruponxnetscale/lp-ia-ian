@@ -134,9 +134,6 @@ input::placeholder{color:#5b6170;}
           <sc-if value="{{ result.hasSecondary }}" hint-placeholder-val="{{ false }}">
             <button onClick="{{ result.secondaryGo }}" style="background:none;border:1px solid rgba(255,255,255,.12);cursor:pointer;border-radius:999px;padding:11px;min-height:46px;color:#c9cdd6;font:600 13.5px 'Outfit',sans-serif;" style-hover="border-color:rgba(59,130,246,.55);color:#fff;">{{ result.secondary }}</button>
           </sc-if>
-          <sc-if value="{{ result.hasTertiary }}" hint-placeholder-val="{{ false }}">
-            <button onClick="{{ result.tertiaryGo }}" style="background:none;border:none;cursor:pointer;padding:8px;color:#8b93a7;font:500 13px 'Outfit',sans-serif;text-decoration:underline;" style-hover="color:#fff;">{{ result.tertiary }}</button>
-          </sc-if>
         </div>
       </sc-if>
     </div>
@@ -169,6 +166,7 @@ const CONFIG = {
   nome: 'Ian Santiago',
   whatsappNX: '5548988413036',
   whatsappIan: '5548988413036',
+  agendaApi: 'https://n8n.controlemaisia.com.br/webhook/lp-ia-ian-agenda',
   agendaGoogle: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ06LqMznLrbHRt8qCRZYaVn1LHBLCs0Ak05RDEEEX2QTX5doe5uG53EMB7VGmAekfLmhRhUFp8s',
   webhook: 'https://n8n.controlemaisia.com.br/webhook/lp-ia-ian',
   whatsapp: '',
@@ -198,7 +196,7 @@ const INTRO = [
 const DELAY = 1000;
 const DRAFT_KEY = 'lpian_quiz_rascunho_v1';
 const DRAFT_TTL = 30 * 60 * 1000;
-const DRAFT_FIELDS = ['msgs', 'step', 'name', 'a', 'obj', 'site', 'result', 'direct', 'ramo', 'ddi', 'phone', 'hist', 'sid', 't0', 'destinoKey', 'clicou', 'ag'];
+const DRAFT_FIELDS = ['msgs', 'step', 'name', 'a', 'obj', 'site', 'result', 'direct', 'ramo', 'ddi', 'phone', 'hist', 'sid', 't0', 'destinoKey', 'clicou', 'ag', 'agFail'];
 const loadDraft = () => {
   try {
     const d = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null');
@@ -216,7 +214,8 @@ class Component extends DCLogic {
     this.unlock = () => { const c = this.audio(); if (c && c.state === 'suspended') c.resume().catch(() => {}); };
     ['pointerdown', 'touchstart', 'keydown'].forEach(ev => window.addEventListener(ev, this.unlock, { once: false, passive: true }));
     this.mounted = true;
-    const d = loadDraft();
+    let d = loadDraft();
+    if (d && ['done', 'agDia', 'agHora'].includes(d.step)) { try { localStorage.removeItem(DRAFT_KEY); } catch (e) {} d = null; }
     const ini = { sid: (d && d.sid) || newSid(), t0: (d && d.t0) || new Date().toISOString(), hist: (d && d.hist) || [] };
     if (d) { this.played = d.msgs.filter(m => m.bot).length; this.setState({ ...d, ...ini, typing: false }, () => { this.saveDraft(); this.follow(); }); }
     else this.setState(ini, () => this.intro());
@@ -226,6 +225,7 @@ class Component extends DCLogic {
   }
   saveDraft() {
     const s = this.state;
+    if (['done', 'agDia', 'agHora'].includes(s.step)) { try { localStorage.removeItem(DRAFT_KEY); } catch (e) {} return; }
     if (s.step === 'wait' || s.typing || !s.msgs.length) {
       try { const d = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null'); if (d) { d.ts = Date.now(); localStorage.setItem(DRAFT_KEY, JSON.stringify(d)); } } catch (e) {}
       return;
@@ -327,7 +327,7 @@ class Component extends DCLogic {
   answer(text, botMsg, nextState, etapaOv) {
     const etapa = etapaOv || this.state.step;
     this.setState(s => ({ msgs: [...s.msgs, { user: true, text }], step: 'wait', hist: [...(s.hist || []), { etapa, resposta: text, ts: new Date().toISOString() }] }), () => { this.follow(); this.saveDraft(); this.track('resposta', { etapa: nextState && nextState.step === 'done' ? 'concluido' : etapa }); });
-    this.say(botMsg, nextState);
+    return this.say(botMsg, nextState);
   }
   isBR() { return (this.state.ddi || '').replace(/\D/g, '') === '55'; }
   maskPhone(v) {
@@ -455,6 +455,10 @@ class Component extends DCLogic {
   skipSite = () => this.finish('Ainda não tenho');
   options() {
     const st = this.state.step, a = this.state.a;
+    if (st === 'agDia') return [...(this.state.agDays || []).map(d => ({ label: this.diaLabel(d), pick: () => this.pickDia(d) })),
+      { label: 'Prefiro falar no WhatsApp', pick: () => { this.wa(CONFIG.whatsappNX, 'Oi Ian! Sou ' + this.first() + ', respondi o diagnóstico e quero *conversar pelo WhatsApp*.'); this.setState({ step: 'done', clicou: 'whatsapp_nx' }, () => this.track('clique', { etapa: 'clique', clicou: 'whatsapp_nx' })); } }];
+    if (st === 'agHora') return [...((this.state.agDia && this.state.agDia.slots) || []).map(h => ({ label: h, pick: () => this.pickHora(h) })),
+      { label: 'Escolher outro dia', pick: () => this.answer('Escolher outro dia', { bot: true, pre: 'Sem problema. Qual ', hl: 'dia', post: ' fica melhor pra você?' }, { step: 'agDia' }, 'agHora') }];
     if (st === 'goal') return [
       { label: 'Quero implementar IA na minha empresa', pick: () => { this.set({ objetivo: 'Implementar IA na minha empresa' }); this.setState({ obj: 'empresa' }, () => this.ask('Quero implementar IA na minha empresa', 'ajudaEmpresa')); } },
       { label: 'Quero um agente de IA no WhatsApp', pick: () => { this.set({ objetivo: 'Um agente de IA no WhatsApp' }); this.setState({ obj: 'agente' }, () => this.ask('Quero um agente de IA no WhatsApp', 'ajuda')); } },
@@ -487,6 +491,57 @@ class Component extends DCLogic {
     if (st === 'ajuda') return AJUDA.map(label => ({ label, pre: this.state.obj === 'agente' && label === AJUDA[0], pick: () => { this.set({ ajuda: label }); this.ask(label, 'faturamento'); } }));
     return [];
   }
+  agFetch(body) {
+    const c = new AbortController(), to = setTimeout(() => c.abort(), 25000);
+    return fetch(CONFIG.agendaApi, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: c.signal })
+      .then(r => r.json()).catch(() => null).finally(() => clearTimeout(to));
+  }
+  diaLabel(d) {
+    try {
+      const f = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit' });
+      const p = f.format(new Date()).split('-').map(Number);
+      const amanha = new Date(Date.UTC(p[0], p[1] - 1, p[2] + 1)).toISOString().slice(0, 10);
+      return d.date === amanha ? d.label + ' (amanhã)' : d.label;
+    } catch (e) { return d.label; }
+  }
+  startAgenda = async () => {
+    if (this.state.agBusy) return;
+    this.setState({ agBusy: true, clicou: 'agenda' }, () => this.track('clique', { etapa: 'clique', clicou: 'agenda' }));
+    const r = await this.agFetch({ op: 'slots' });
+    const days = r && r.ok && Array.isArray(r.days) ? r.days : [];
+    if (!days.length) {
+      this.setState({ agBusy: false, agFail: true });
+      this.answer('Agendar reunião', { bot: true, pre: 'Não consegui carregar os horários agora. Você pode ', hl: 'agendar pela agenda online', post: ' ou chamar a gente no WhatsApp.' }, { step: 'done' }, 'agenda');
+      return;
+    }
+    this.setState({ agBusy: false });
+    this.answer('Agendar reunião', { bot: true, pre: 'Perfeito! Qual ', hl: 'dia', post: ' fica melhor pra você?' }, { step: 'agDia', agDays: days }, 'agenda');
+  };
+  pickDia(d) {
+    this.setState({ agDia: d });
+    this.answer(this.diaLabel(d), { bot: true, pre: 'Ótimo. Qual ', hl: 'horário', post: ' fica melhor? A reunião dura 30 minutos.' }, { step: 'agHora' }, 'agDia');
+  }
+  async pickHora(h) {
+    const d = this.state.agDia, a = this.state.a, n = this.first();
+    const p = this.agFetch({ op: 'book', date: d.date, time: h, nome: a.nome || this.state.name, whatsapp: a.whatsapp, objetivo: a.objetivo, ajuda: a.ajuda, faturamento: a.faturamento, atendentes: a.atendentes, cargo: a.cargo, site: a.site });
+    await this.answer(h, { bot: true, pre: 'Só um instante, estou reservando o seu horário…' }, { step: 'wait' }, 'agHora');
+    const r = await p;
+    if (r && r.ok) {
+      const quando = r.label + ' às ' + r.time;
+      this.setState({ ag: 'ok', clicou: 'agendou ' + quando }, () => this.track('clique', { etapa: 'agendado', clicou: 'agendou ' + quando }));
+      const tel = a.whatsapp || '';
+      this.say({ bot: true, pre: '', hl: 'Agendado, ' + n + '! ✅', post: ' ' + quando + '. Vou te mandar uma mensagem em breve no seu WhatsApp' + (tel ? ' (' + tel + ')' : '') + ' pra confirmar tudo.' }, { step: 'done' }, 500);
+      return;
+    }
+    if (r && r.error === 'ocupado') {
+      await this.say({ bot: true, pre: 'Esse horário acabou de ser preenchido. Vou buscar os horários de novo.' }, null, 600);
+      const r2 = await this.agFetch({ op: 'slots' });
+      const days = r2 && r2.ok && Array.isArray(r2.days) ? r2.days : [];
+      if (days.length) { this.say({ bot: true, pre: 'Qual ', hl: 'dia', post: ' fica melhor pra você?' }, { step: 'agDia', agDays: days }, 600); return; }
+    }
+    this.setState({ agFail: true });
+    this.say({ bot: true, pre: 'Não consegui confirmar o horário agora. Você pode ', hl: 'agendar pela agenda online', post: ' ou chamar a gente no WhatsApp.' }, { step: 'done' }, 600);
+  }
   resultActions(r) {
     if (!r) return {};
     const n = this.first(), assunto = (this.state.a.ajuda || this.state.a.objetivo || 'IA na minha empresa').toLowerCase();
@@ -494,27 +549,12 @@ class Component extends DCLogic {
     const zap = (nome, num, txt) => () => { this.wa(num, txt); reg(nome); };
     if (r.key === 'nx') return { ...r, hasSecondary: false, primaryGo: zap('whatsapp_nx', CONFIG.whatsappNX, 'Oi! Sou ' + n + ', respondi o diagnóstico e quero *conversar* sobre ' + assunto + '.') };
     if (r.key === 'ian') return { ...r, hasSecondary: false, primaryGo: zap('whatsapp_ian', CONFIG.whatsappIan, 'Oi Ian! Sou ' + n + ', respondi o diagnóstico e quero *conversar* sobre ' + assunto + '.') };
-    const ag = this.state.ag;
-    const zapNX = zap('whatsapp_nx', CONFIG.whatsappNX, 'Oi Ian! Sou ' + n + ', respondi o diagnóstico e quero *conversar pelo WhatsApp* sobre ' + assunto + '.');
-    if (CONFIG.agendaGoogle && ag === 'aguardando') {
-      const abrir = () => { window.open(CONFIG.agendaGoogle, '_blank'); };
-      const confirmar = () => {
-        const tel = this.state.a.whatsapp || '';
-        this.setState({ ag: 'ok', clicou: 'agendou_confirmado' }, () => this.track('clique', { etapa: 'agendado', clicou: 'agendou_confirmado' }));
-        this.say({ bot: true, pre: '', hl: 'Agendado, ' + n + '! ✅', post: ' Vou te mandar uma mensagem em breve no seu WhatsApp' + (tel ? ' (' + tel + ')' : '') + ' pra confirmar tudo.' }, null, 600);
-      };
-      return { ...r, primary: 'Já agendei', primaryGo: confirmar, hasSecondary: true, secondary: 'Abrir a agenda de novo', secondaryGo: abrir, hasTertiary: true, tertiary: 'Prefiro falar no WhatsApp', tertiaryGo: zapNX };
-    }
-    const agendar = CONFIG.agendaGoogle ? () => {
-      window.open(CONFIG.agendaGoogle, '_blank');
-      this.setState({ ag: 'aguardando', clicou: 'agenda' }, () => this.track('clique', { etapa: 'clique', clicou: 'agenda' }));
-      this.say({ bot: true, pre: 'Abri a agenda em outra aba. Escolha o melhor horário e, quando terminar, volte aqui e toque em ', hl: '“Já agendei”', post: '.' }, null, 700);
-    } : zap('agenda_whatsapp', CONFIG.whatsappNX, 'Oi Ian! Sou ' + n + ', respondi o diagnóstico e quero *agendar a reunião de 30 min* sobre ' + assunto + '. Qual o melhor horário?');
-    return { ...r, hasSecondary: true, primaryGo: agendar, secondaryGo: zapNX };
+    const agendar = CONFIG.agendaApi && !this.state.agFail ? this.startAgenda : CONFIG.agendaGoogle ? () => { window.open(CONFIG.agendaGoogle, '_blank'); reg('agenda'); } : zap('agenda_whatsapp', CONFIG.whatsappNX, 'Oi Ian! Sou ' + n + ', respondi o diagnóstico e quero *agendar a reunião de 30 min* sobre ' + assunto + '. Qual o melhor horário?');
+    return { ...r, primary: this.state.agBusy ? 'Buscando horários…' : (this.state.agFail ? 'Agendar pela agenda online' : r.primary), hasSecondary: true, primaryGo: agendar, secondaryGo: zap('whatsapp_nx', CONFIG.whatsappNX, 'Oi Ian! Sou ' + n + ', respondi o diagnóstico e quero *conversar pelo WhatsApp* sobre ' + assunto + '.') };
   }
   renderVals() {
     const opts = this.options().map(o => ({ ...o, bg: o.pre ? 'rgba(59,130,246,.12)' : '#0f131b', border: o.pre ? 'rgba(59,130,246,.7)' : 'rgba(255,255,255,.09)' }));
-    const chips = this.state.step === 'cargo';
+    const chips = this.state.step === 'cargo' || this.state.step === 'agHora';
     return {
       msgs: this.state.msgs,
       name: this.state.name,
@@ -547,7 +587,7 @@ class Component extends DCLogic {
       onSiteKey: e => { if (e.key === 'Enter') this.submitSite(); },
       submitSite: this.submitSite,
       skipSite: this.skipSite,
-      restart: () => { clearTimeout(this.t); this.gen = (this.gen || 0) + 1; this.played = 0; this.setState({ nameErr: false, siteErr: false, msgs: [], step: 'wait', name: '', result: null, a: {}, site: '', obj: null, typing: false, hist: [], destinoKey: '', clicou: '', ag: '', sid: newSid(), t0: new Date().toISOString() }, () => this.intro()); },
+      restart: () => { clearTimeout(this.t); this.gen = (this.gen || 0) + 1; this.played = 0; this.setState({ nameErr: false, siteErr: false, msgs: [], step: 'wait', name: '', result: null, a: {}, site: '', obj: null, typing: false, hist: [], destinoKey: '', clicou: '', ag: '', agFail: false, agDays: [], agBusy: false, sid: newSid(), t0: new Date().toISOString() }, () => this.intro()); },
       accOpen: this.state.accOpen,
       accIcon: this.state.accOpen ? '−' : '+',
       toggleAcc: () => this.setState(s => ({ accOpen: !s.accOpen })),
