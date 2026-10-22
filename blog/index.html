@@ -97,7 +97,7 @@ pre,code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
 <div style="position:absolute;right:30px;top:50%;width:140px;height:140px;margin-top:-70px;border-radius:999px;background:#0056E2;opacity:.9;pointer-events:none;"></div>
 <div style="position:absolute;left:0;right:0;bottom:0;height:4px;background:linear-gradient(90deg,#0056E2 0,#0056E2 120px,transparent 120px);"></div>
 <div style="position:relative;z-index:10;width:100%;max-width:720px;margin:0 auto;padding:0 24px;">
-<a href="#/blog" style="display:inline-flex;align-items:center;gap:4px;font-size:14px;color:#3f3f46;padding:10px 0;margin-bottom:14px;transition:color .2s;" style-hover="color:#0056E2">← Voltar ao blog</a>
+<a href="{{ homeHref }}" style="display:inline-flex;align-items:center;gap:4px;font-size:14px;color:#3f3f46;padding:10px 0;margin-bottom:14px;transition:color .2s;" style-hover="color:#0056E2">← Voltar ao blog</a>
 <div style="margin-bottom:16px;"><span style="display:inline-flex;align-items:center;gap:6px;background:#0056E2;border:1px solid #0056E2;border-radius:999px;padding:4px 12px;font-size:12px;font-weight:500;color:#fff;text-transform:uppercase;letter-spacing:.1em;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"></path><circle cx="7.5" cy="7.5" r=".5"></circle></svg>{{ post.cat }}</span></div>
 <h1 style="font-size:clamp(30px,5vw,40px);font-weight:800;color:#0a0a0a;line-height:1.25;margin:0 0 20px;text-wrap:balance;">{{ post.title }}</h1>
 <div style="display:flex;flex-wrap:wrap;align-items:center;gap:16px;font-size:14px;color:#3f3f46;">
@@ -127,8 +127,8 @@ pre,code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
 <button onClick="{{ copyLink }}" style="display:inline-flex;align-items:center;gap:8px;background:#0056E2;border:1px solid #0056E2;border-radius:8px;padding:12px 16px;font-size:14px;color:#fff;font-family:inherit;cursor:pointer;transition:all .2s;" style-hover="background:#0047bd">{{ copyLabel }}</button>
 </div>
 <div style="display:flex;flex-wrap:wrap;gap:16px;">
-<a href="#/blog" style="font-size:14px;color:#0056E2;" style-hover="color:#003fae">← Ver todos os posts</a>
-<a href="#/blog" style="font-size:14px;color:#0056E2;" style-hover="color:#003fae">Voltar para o início →</a>
+<a href="{{ homeHref }}" style="font-size:14px;color:#0056E2;" style-hover="color:#003fae">← Ver todos os posts</a>
+<a href="{{ homeHref }}" style="font-size:14px;color:#0056E2;" style-hover="color:#003fae">Voltar para o início →</a>
 </div>
 </div>
 </div>
@@ -137,7 +137,7 @@ pre,code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
 <sc-if value="{{ isAlt }}" hint-placeholder-val="{{ false }}">
 <div data-screen-label="Post — template alternativo" style="min-height:100vh;color:#18181b;background-color:#D0D0D2;background-image:linear-gradient(rgba(0,0,0,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.05) 1px,transparent 1px);background-size:40px 40px;font-family:Inter,system-ui,sans-serif;">
 <header style="max-width:760px;margin:0 auto;padding:clamp(32px,5vw,48px) 24px 0;">
-<a href="#/blog" style="display:inline-block;font-size:14px;padding:10px 0;margin-bottom:30px;color:#3f3f46;transition:color .2s;" style-hover="color:#0056E2">← Voltar ao blog</a>
+<a href="{{ homeHref }}" style="display:inline-block;font-size:14px;padding:10px 0;margin-bottom:30px;color:#3f3f46;transition:color .2s;" style-hover="color:#0056E2">← Voltar ao blog</a>
 <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;">
 <sc-for list="{{ alt.chips }}" as="ch" hint-placeholder-count="2">
 <span style="border-radius:999px;padding:4px 12px;font-size:12px;border:1px solid rgba(0,0,0,0.2);color:#3f3f46;"><strong style="color:#0a0a0a;">{{ ch.b }}</strong>{{ ch.r }}</span>
@@ -150,7 +150,7 @@ pre,code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
 <div ref="{{ bodyRef }}" onClick="{{ onBodyClick }}"></div>
 <div style="margin-top:48px;display:flex;flex-wrap:wrap;gap:16px;font-size:14px;">
 <a href="{{ shareWa }}" target="_blank" rel="noopener noreferrer" style="color:#3f3f46;transition:color .2s;" style-hover="color:#0056E2">Compartilhar no WhatsApp</a>
-<a href="#/blog" style="color:#0056E2;">← Ver todos os posts</a>
+<a href="{{ homeHref }}" style="color:#0056E2;">← Ver todos os posts</a>
 </div>
 </main>
 </div>
@@ -179,11 +179,12 @@ const ICO = {
 const BLUE = '#0056E2', DARK = '#0047bd', INK = '#27272a';
 const B = c => Object.assign({}, c, { blue: true });
 
+function isLive() { return /^\/blog(\/|$)/.test(location.pathname); }
 function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 function mapHref(u) {
   u = u.replace(/&amp;/g, '&');
-  if (u === '/blog' || u.startsWith('/blog/')) return { h: '#' + u, ext: false };
-  if (u.startsWith('/')) return { h: '#/blog', ext: false };
+  if (u === '/blog' || u.startsWith('/blog/')) return { h: isLive() ? u : '#' + u, ext: false };
+  if (u.startsWith('/')) return { h: isLive() ? '/blog/' : '#/blog', ext: false };
   return { h: u, ext: !u.startsWith('#') };
 }
 function aAttrs(u) { const m = mapHref(u); return `href="${esc(m.h)}"` + (m.ext ? ' target="_blank" rel="noopener noreferrer"' : ''); }
@@ -391,6 +392,15 @@ class Component extends DCLogic {
   componentDidMount() {
     this.onHash = () => { this.setState({ route: this.getRoute() }); window.scrollTo(0, 0); };
     window.addEventListener('hashchange', this.onHash);
+    window.addEventListener('popstate', this.onHash);
+    this.onClick = e => {
+      if (!isLive() || e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const a = e.target.closest && e.target.closest('a');
+      if (!a || a.target === '_blank') return;
+      const h = a.getAttribute('href') || '';
+      if (h === '/blog' || h.startsWith('/blog/')) { e.preventDefault(); history.pushState(null, '', h); this.onHash(); }
+    };
+    document.addEventListener('click', this.onClick);
     this.onScroll = () => {
       if (this.raf) return;
       this.raf = requestAnimationFrame(() => {
@@ -408,9 +418,17 @@ class Component extends DCLogic {
   }
   componentWillUnmount() {
     window.removeEventListener('hashchange', this.onHash);
+    window.removeEventListener('popstate', this.onHash);
+    document.removeEventListener('click', this.onClick);
     window.removeEventListener('scroll', this.onScroll);
   }
   getRoute() {
+    if (isLive()) {
+      const hm = location.hash.match(/^#\/blog\/(.+)$/);
+      if (hm) history.replaceState(null, '', '/blog/' + hm[1]);
+      const m = location.pathname.match(/^\/blog\/([^/.]+)\/?$/);
+      return m ? '#/blog/' + m[1] : '';
+    }
     if (location.hash.startsWith('#/blog')) return location.hash;
     const m = location.pathname.match(/\/blog\/([^/.]+)\/?$/);
     return m ? '#/blog/' + m[1] : location.hash;
@@ -456,9 +474,10 @@ class Component extends DCLogic {
     const posts = this.state.posts || [], p = this.currentPost();
     const q = this.state.query.trim().toLowerCase();
     const cards = posts.filter(x => !q || (x.title + ' ' + x.summary + ' ' + x.cat).toLowerCase().includes(q))
-      .map(x => ({ href: '#/blog/' + x.slug, cat: x.cat, title: x.title, summary: x.summary, date: x.date, time: x.time }));
+      .map(x => ({ href: (isLive() ? '/blog/' : '#/blog/') + x.slug, cat: x.cat, title: x.title, summary: x.summary, date: x.date, time: x.time }));
     const url = p ? this.pageUrl(p.slug) : '';
     return {
+      homeHref: isLive() ? '/blog/' : '#/blog',
       isList: !p, isStd: !!p && !p.alt, isAlt: !!p && p.alt,
       cards, query: this.state.query, onSearch: e => this.setState({ query: e.target.value }),
       post: p || { cat: '', title: '', datePage: '', timeLong: '' },
