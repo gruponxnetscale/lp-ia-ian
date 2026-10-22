@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Blog | NX Digital</title>
+<link rel="canonical" href="https://ia.gruponxdigital.com/blog">
+<meta property="og:url" content="https://ia.gruponxdigital.com/blog">
+<meta name="description" content="Artigos sobre automação com IA, agentes inteligentes e estratégias para escalar sua empresa. Por NX Digital.">
+<meta name="theme-color" content="#0056E2">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NX Digital">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Blog | NX Digital">
+<meta property="og:description" content="Artigos sobre automação com IA, agentes inteligentes e estratégias para escalar sua empresa. Por NX Digital.">
+<meta property="og:image" content="https://ia.gruponxdigital.com/blog/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Blog | NX Digital">
+<meta name="twitter:image" content="https://ia.gruponxdigital.com/blog/assets/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&amp;family=Inter:wght@400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;padding:0;background:#D0D0D2;}
+body{font-family:Inter,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;}
+*{box-sizing:border-box;}
+a{color:inherit;text-decoration:none;}
+a:hover{color:inherit;}
+input::placeholder{color:hsl(30 7% 60% / .6);}
+pre,code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+</style>
+</helmet>
+<div style="min-height:100vh;background:#D0D0D2;color:hsl(30 12% 90%);font-family:Inter,system-ui,-apple-system,sans-serif;">
+
+<sc-if value="{{ isList }}" hint-placeholder-val="{{ true }}">
+<div data-screen-label="Blog — listagem">
+<header style="position:relative;overflow:hidden;background:#D0D0D2;">
+<div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 90% at 100% 0%,rgba(0,86,226,.16),transparent 70%);"></div>
+<div style="position:absolute;right:-180px;top:50%;width:560px;height:560px;margin-top:-280px;border-radius:999px;border:1px solid rgba(0,86,226,.22);pointer-events:none;"></div>
+<div style="position:absolute;right:-110px;top:50%;width:420px;height:420px;margin-top:-210px;border-radius:999px;border:1px solid rgba(0,86,226,.3);pointer-events:none;"></div>
+<div style="position:absolute;right:-40px;top:50%;width:280px;height:280px;margin-top:-140px;border-radius:999px;border:1px solid rgba(0,86,226,.4);pointer-events:none;"></div>
+<div style="position:absolute;right:30px;top:50%;width:140px;height:140px;margin-top:-70px;border-radius:999px;background:#0056E2;opacity:.9;pointer-events:none;"></div>
+<div style="position:absolute;left:0;right:0;bottom:0;height:4px;background:linear-gradient(90deg,#0056E2 0,#0056E2 120px,transparent 120px);"></div>
+<div style="position:relative;z-index:10;max-width:896px;margin:0 auto;padding:clamp(40px,10vw,80px) 20px clamp(40px,8vw,64px);text-align:center;">
+<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:28px;">
+<a href="https://www.instagram.com/eiansantiago/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:10px;background:#27272a;border:1px solid rgba(255,255,255,0.1);border-radius:999px;padding:6px 16px 6px 6px;text-align:left;font-family:Outfit,Inter,system-ui,sans-serif;transition:transform .2s;" style-hover="transform:translateY(-2px)"><span style="width:38px;height:38px;border-radius:999px;overflow:hidden;flex-shrink:0;display:block;background:#d4d4d8;"><img src="assets/ian-santiago.jpg" alt="Ian Santiago" style="width:100%;height:100%;object-fit:cover;object-position:50% 20%;transform:scale(1);transform-origin:50% 30%;display:block;"></span><span style="display:flex;flex-direction:column;gap:2px;"><span style="display:flex;align-items:center;gap:5px;font-size:15px;font-weight:800;color:#fff;line-height:1.1;">Ian Santiago<svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#1d9bf0"></circle><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span style="font-size:12px;color:#a1a1aa;line-height:1.1;">@eiansantiago</span></span></a>
+<a href="https://www.instagram.com/gruponxdigital/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:10px;background:#27272a;border:1px solid rgba(255,255,255,0.1);border-radius:999px;padding:6px 16px 6px 6px;text-align:left;font-family:Outfit,Inter,system-ui,sans-serif;transition:transform .2s;" style-hover="transform:translateY(-2px)"><span style="width:38px;height:38px;border-radius:999px;overflow:hidden;flex-shrink:0;display:block;background:#d4d4d8;"><img src="assets/nx-digital.png" alt="NX Digital" style="width:100%;height:100%;object-fit:cover;object-position:50% 49%;display:block;"></span><span style="display:flex;flex-direction:column;gap:2px;"><span style="display:flex;align-items:center;gap:5px;font-size:15px;font-weight:800;color:#fff;line-height:1.1;">NX Digital<svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#1d9bf0"></circle><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span style="font-size:12px;color:#a1a1aa;line-height:1.1;">@gruponxdigital</span></span></a>
+<a href="https://www.instagram.com/bits_mateus/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:10px;background:#27272a;border:1px solid rgba(255,255,255,0.1);border-radius:999px;padding:6px 16px 6px 6px;text-align:left;font-family:Outfit,Inter,system-ui,sans-serif;transition:transform .2s;" style-hover="transform:translateY(-2px)"><span style="width:38px;height:38px;border-radius:999px;overflow:hidden;flex-shrink:0;display:block;background:#d4d4d8;"><img src="assets/mateus.png" alt="Mateus Bitencourt" style="width:100%;height:100%;object-fit:cover;display:block;"></span><span style="display:flex;flex-direction:column;gap:2px;"><span style="display:flex;align-items:center;gap:5px;font-size:15px;font-weight:800;color:#fff;line-height:1.1;">Mateus Bitencourt<svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#1d9bf0"></circle><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span style="font-size:12px;color:#a1a1aa;line-height:1.1;">@bits_mateus</span></span></a>
+</div>
+<h1 style="font-size:clamp(34px,6.5vw,56px);font-weight:800;color:#0a0a0a;line-height:1.2;letter-spacing:-0.03em;margin:0 0 24px;display:flex;flex-direction:column;align-items:center;gap:8px;"><span>Transforme IA em</span><span style="display:block;max-width:100%;"><span style="background:#0056E2;color:#fff;border-radius:10px;padding:2px 14px 6px;box-decoration-break:clone;-webkit-box-decoration-break:clone;line-height:1.35;">eficiência, tempo e resultado.</span></span></h1>
+<p style="color:#52525b;font-size:18px;line-height:1.55;max-width:576px;margin:0 auto 32px;">Soluções com inteligência artificial para empresas.</p>
+<div style="position:relative;max-width:448px;margin:0 auto;text-align:left;">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);color:hsl(30 7% 60% / .7);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+<input type="text" placeholder="Pesquisar artigos..." value="{{ query }}" onChange="{{ onSearch }}" style="width:100%;background:#fff;border:1px solid rgba(0,0,0,0.12);border-radius:12px;padding:12px 16px 12px 44px;color:#18181b;font-size:16px;font-family:inherit;outline:none;transition:border-color .2s;" style-focus="border-color:hsl(226 71% 40%);box-shadow:0 0 0 1px hsl(226 71% 40% / .3)">
+</div>
+</div>
+</header>
+<section style="max-width:896px;margin:0 auto;padding:clamp(32px,8vw,64px) 20px;">
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,380px),1fr));gap:24px;">
+<sc-for list="{{ cards }}" as="c" hint-placeholder-count="6">
+<a href="{{ c.href }}" style="display:block;">
+<article style="background:#0056E2;border:1px solid rgba(255,255,255,0.25);border-radius:12px;padding:24px;height:100%;display:flex;flex-direction:column;transition:all .3s cubic-bezier(.4,0,.2,1);" style-hover="border-color:#fff;transform:translateY(-4px);box-shadow:0 8px 32px rgba(0,86,226,.35)">
+<div style="margin-bottom:16px;"><span style="display:inline-flex;align-items:center;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:500;color:#fff;text-transform:uppercase;letter-spacing:.1em;">{{ c.cat }}</span></div>
+<h2 style="color:#fff;font-size:18px;font-weight:700;line-height:1.375;margin:0 0 12px;">{{ c.title }}</h2>
+<p style="color:#fff;font-size:14px;line-height:1.625;margin:0 0 20px;flex:1;">{{ c.summary }}</p>
+<div style="display:flex;align-items:center;justify-content:space-between;padding-top:16px;border-top:1px solid rgba(255,255,255,0.25);">
+<div style="display:flex;align-items:center;gap:12px;font-size:12px;color:#fff;">
+<span style="display:flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg>{{ c.date }}</span>
+<span style="display:flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>{{ c.time }}</span>
+</div>
+<span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:500;color:#fff;">Ler<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></span>
+</div>
+</article>
+</a>
+</sc-for>
+</div>
+</section>
+</div>
+</sc-if>
+
+<sc-if value="{{ isStd }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Post — template padrão" style="min-height:100vh;background:#D0D0D2;color:#27272a;">
+<div style="position:fixed;top:0;left:0;right:0;z-index:50;height:3px;background:rgba(0,0,0,.1);"><div style="height:100%;background:#0056E2;transition:width .15s;width:{{ progW }};"></div></div>
+<header style="position:relative;min-height:clamp(340px,45vw,480px);overflow:hidden;background:#D0D0D2;display:flex;flex-direction:column;justify-content:flex-end;padding-top:56px;padding-bottom:clamp(32px,5vw,64px);">
+<div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 90% at 100% 0%,rgba(0,86,226,.16),transparent 70%);"></div>
+<div style="position:absolute;right:-180px;top:50%;width:560px;height:560px;margin-top:-280px;border-radius:999px;border:1px solid rgba(0,86,226,.22);pointer-events:none;"></div>
+<div style="position:absolute;right:-110px;top:50%;width:420px;height:420px;margin-top:-210px;border-radius:999px;border:1px solid rgba(0,86,226,.3);pointer-events:none;"></div>
+<div style="position:absolute;right:-40px;top:50%;width:280px;height:280px;margin-top:-140px;border-radius:999px;border:1px solid rgba(0,86,226,.4);pointer-events:none;"></div>
+<div style="position:absolute;right:30px;top:50%;width:140px;height:140px;margin-top:-70px;border-radius:999px;background:#0056E2;opacity:.9;pointer-events:none;"></div>
+<div style="position:absolute;left:0;right:0;bottom:0;height:4px;background:linear-gradient(90deg,#0056E2 0,#0056E2 120px,transparent 120px);"></div>
+<div style="position:relative;z-index:10;width:100%;max-width:720px;margin:0 auto;padding:0 24px;">
+<a href="#/blog" style="display:inline-flex;align-items:center;gap:4px;font-size:14px;color:#3f3f46;padding:10px 0;margin-bottom:14px;transition:color .2s;" style-hover="color:#0056E2">← Voltar ao blog</a>
+<div style="margin-bottom:16px;"><span style="display:inline-flex;align-items:center;gap:6px;background:#0056E2;border:1px solid #0056E2;border-radius:999px;padding:4px 12px;font-size:12px;font-weight:500;color:#fff;text-transform:uppercase;letter-spacing:.1em;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"></path><circle cx="7.5" cy="7.5" r=".5"></circle></svg>{{ post.cat }}</span></div>
+<h1 style="font-size:clamp(30px,5vw,40px);font-weight:800;color:#0a0a0a;line-height:1.25;margin:0 0 20px;text-wrap:balance;">{{ post.title }}</h1>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:16px;font-size:14px;color:#3f3f46;">
+<span style="display:flex;align-items:center;gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg>{{ post.datePage }}</span>
+<span style="display:flex;align-items:center;gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>{{ post.timeLong }}</span>
+</div>
+</div>
+</header>
+<article style="max-width:720px;margin:0 auto;padding:clamp(48px,6vw,64px) 24px;">
+<sc-if value="{{ hasToc }}" hint-placeholder-val="{{ true }}">
+<nav aria-label="Índice do artigo" style="background:#0056E2;border-left:3px solid #fff;border-radius:12px;padding:24px;max-width:400px;margin-bottom:48px;">
+<p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:#fff;margin:0 0 16px;">Neste artigo</p>
+<ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;">
+<sc-for list="{{ toc }}" as="t" hint-placeholder-count="4">
+<li><button onClick="{{ t.go }}" style="display:flex;align-items:center;gap:12px;font-size:14px;color:rgba(255,255,255,.88);background:none;border:0;padding:7px 0;cursor:pointer;text-align:left;width:100%;font-family:inherit;transition:color .2s;" style-hover="color:#fff"><span style="color:rgba(255,255,255,.6);font-family:ui-monospace,Menlo,monospace;font-size:12px;flex-shrink:0;">{{ t.num }}</span>{{ t.label }}</button></li>
+</sc-for>
+</ol>
+</nav>
+</sc-if>
+<div ref="{{ bodyRef }}" onClick="{{ onBodyClick }}"></div>
+</article>
+<div style="max-width:720px;margin:0 auto;padding:48px 24px;border-top:1px solid rgba(0,0,0,.12);">
+<p style="font-size:14px;color:#52525b;margin:0 0 24px;">Compartilhe este artigo</p>
+<div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:40px;">
+<a href="{{ shareWa }}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;background:#0056E2;border:1px solid #0056E2;border-radius:8px;padding:12px 16px;font-size:14px;color:#fff;transition:all .2s;" style-hover="background:#0047bd;color:#fff">Compartilhar no WhatsApp</a>
+<a href="{{ shareLi }}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;background:#0056E2;border:1px solid #0056E2;border-radius:8px;padding:12px 16px;font-size:14px;color:#fff;transition:all .2s;" style-hover="background:#0047bd;color:#fff">Compartilhar no LinkedIn</a>
+<button onClick="{{ copyLink }}" style="display:inline-flex;align-items:center;gap:8px;background:#0056E2;border:1px solid #0056E2;border-radius:8px;padding:12px 16px;font-size:14px;color:#fff;font-family:inherit;cursor:pointer;transition:all .2s;" style-hover="background:#0047bd">{{ copyLabel }}</button>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:16px;">
+<a href="#/blog" style="font-size:14px;color:#0056E2;" style-hover="color:#003fae">← Ver todos os posts</a>
+<a href="#/blog" style="font-size:14px;color:#0056E2;" style-hover="color:#003fae">Voltar para o início →</a>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isAlt }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Post — template alternativo" style="min-height:100vh;color:#18181b;background-color:#D0D0D2;background-image:linear-gradient(rgba(0,0,0,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.05) 1px,transparent 1px);background-size:40px 40px;font-family:Inter,system-ui,sans-serif;">
+<header style="max-width:760px;margin:0 auto;padding:clamp(32px,5vw,48px) 24px 0;">
+<a href="#/blog" style="display:inline-block;font-size:14px;padding:10px 0;margin-bottom:30px;color:#3f3f46;transition:color .2s;" style-hover="color:#0056E2">← Voltar ao blog</a>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;">
+<sc-for list="{{ alt.chips }}" as="ch" hint-placeholder-count="2">
+<span style="border-radius:999px;padding:4px 12px;font-size:12px;border:1px solid rgba(0,0,0,0.2);color:#3f3f46;"><strong style="color:#0a0a0a;">{{ ch.b }}</strong>{{ ch.r }}</span>
+</sc-for>
+</div>
+<h1 style="font-size:clamp(36px,7vw,60px);font-weight:800;line-height:1.05;letter-spacing:-0.025em;margin:0 0 20px;">{{ alt.h1a }} <span style="font-family:'Instrument Serif',serif;font-style:italic;color:#0056E2;font-weight:400;">{{ alt.h1b }}</span></h1>
+<p style="font-size:18px;line-height:1.625;margin:0 0 32px;color:#3f3f46;">{{ alt.lead }}</p>
+</header>
+<main style="max-width:760px;margin:0 auto;padding:0 24px 64px;">
+<div ref="{{ bodyRef }}" onClick="{{ onBodyClick }}"></div>
+<div style="margin-top:48px;display:flex;flex-wrap:wrap;gap:16px;font-size:14px;">
+<a href="{{ shareWa }}" target="_blank" rel="noopener noreferrer" style="color:#3f3f46;transition:color .2s;" style-hover="color:#0056E2">Compartilhar no WhatsApp</a>
+<a href="#/blog" style="color:#0056E2;">← Ver todos os posts</a>
+</div>
+</main>
+</div>
+</sc-if>
+
+<footer style="background:#D0D0D2;padding:40px 20px 48px;font-family:Outfit,Inter,system-ui,sans-serif;">
+<div style="max-width:896px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:36px;">
+<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:16px;">
+<a href="https://www.instagram.com/gruponxdigital/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:10px;background:#0b0d12;color:#fff;border:1px solid rgba(255,255,255,0.14);border-radius:999px;padding:14px 26px;font-size:16px;font-weight:700;transition:transform .2s,background .2s;" style-hover="background:#0056E2;transform:translateY(-2px)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>Instagram</a>
+<a href="https://gruponxdigital.com/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:10px;background:#0b0d12;color:#fff;border:1px solid rgba(255,255,255,0.14);border-radius:999px;padding:14px 26px;font-size:16px;font-weight:700;transition:transform .2s,background .2s;" style-hover="background:#0056E2;transform:translateY(-2px)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>Site NX</a>
+</div>
+<a href="https://gruponxdigital.com/" target="_blank" rel="noopener noreferrer" style="font-size:14px;color:#3b5a9a;padding:12px;" style-hover="color:#0056E2">Grupo NX Digital</a>
+</div>
+</footer>
+
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const ICO = {
+  copy: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>',
+  check: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>',
+  bulb: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>',
+  arrow: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>'
+};
+const BLUE = '#0056E2', DARK = '#0047bd', INK = '#27272a';
+const B = c => Object.assign({}, c, { blue: true });
+
+function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function mapHref(u) {
+  u = u.replace(/&amp;/g, '&');
+  if (u === '/blog' || u.startsWith('/blog/')) return { h: '#' + u, ext: false };
+  if (u.startsWith('/')) return { h: '#/blog', ext: false };
+  return { h: u, ext: !u.startsWith('#') };
+}
+function aAttrs(u) { const m = mapHref(u); return `href="${esc(m.h)}"` + (m.ext ? ' target="_blank" rel="noopener noreferrer"' : ''); }
+function btnHtml(t, u, ctx, onBlue) {
+  if (/wa\.me|#sem-link/.test(u)) return '';
+  const bg = onBlue ? '#fff' : BLUE, fg = onBlue ? BLUE : '#fff';
+  if (ctx.alt) return `<a ${aAttrs(u)} style="display:inline-flex;align-items:center;gap:8px;border-radius:14px;padding:16px 28px;font-size:18px;font-weight:800;background:${bg};color:${fg}">${t}${ICO.arrow}</a>`;
+  return `<a ${aAttrs(u)}><button style="background:${bg};color:${fg};font-weight:600;border:0;border-radius:8px;padding:14px 32px;font-size:16px;font-family:inherit;cursor:pointer" onmouseover="this.style.filter='brightness(.93)'" onmouseout="this.style.filter=''">${t}</button></a>`;
+}
+function inline(s, ctx) {
+  const bl = !!ctx.blue;
+  s = esc(s);
+  s = s.replace(/\[⟦botão: ([^⟧]+)⟧\]\(([^)]+)\)/g, (m, t, u) => btnHtml(t, u, ctx, bl));
+  s = s.replace(/⟦botão: [^⟧]+⟧/g, '');
+  s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (m, t, u) => `<a ${aAttrs(u)} style="color:${bl ? '#fff' : BLUE};text-decoration:underline;text-underline-offset:3px">${t}</a>`);
+  s = s.replace(/\*\*([^*]+)\*\*/g, `<strong style="color:${bl ? '#fff' : '#0a0a0a'};font-weight:600">$1</strong>`);
+  s = s.replace(/`([^`]+)`/g, `<code style="color:${bl ? '#fff' : '#003fae'};font-size:.92em">$1</code>`);
+  return s;
+}
+function codeCard(name, label, code, ctx) {
+  const copyBtn = ctx.alt
+    ? `<button data-copy="${esc(label)}" style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;border-radius:8px;padding:6px 12px;border:0;cursor:pointer;font-family:inherit;background:${BLUE};color:#fff">${ICO.copy}<span data-lbl>${esc(label)}</span></button>`
+    : `<button data-copy="${esc(label || 'Copiar')}" style="display:flex;align-items:center;gap:6px;font-size:12px;color:#d4d4d8;background:none;border:0;padding:10px 6px;cursor:pointer;font-family:inherit" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#d4d4d8'">${ICO.copy}<span data-lbl>${esc(label || 'Copiar')}</span></button>`;
+  const dots = ctx.alt ? '' : `<div style="display:flex;gap:6px"><span style="width:12px;height:12px;border-radius:999px;background:rgba(255,255,255,.3)"></span><span style="width:12px;height:12px;border-radius:999px;background:rgba(255,255,255,.3)"></span><span style="width:12px;height:12px;border-radius:999px;background:rgba(255,255,255,.3)"></span></div>`;
+  const head = (name || label) ? `<div style="background:#18181b;padding:${ctx.alt ? '12px 16px' : '8px 16px'};display:flex;align-items:center;justify-content:space-between;gap:12px">${dots}<span style="font-size:12px;color:#a1a1aa;font-family:ui-monospace,Menlo,monospace">${esc(name)}</span>${copyBtn}</div>` : '';
+  return `<div data-card style="margin:24px 0;border-radius:${ctx.alt ? 16 : 12}px;overflow:hidden;background:#27272a;border:1px solid rgba(0,0,0,.4)">${head}<pre style="margin:0;padding:20px;overflow-x:auto;font-size:14px;line-height:1.625;white-space:pre-wrap;color:#e4e4e7"><code style="color:#e4e4e7">${esc(code)}</code></pre></div>`;
+}
+function ctaBox(title, mids, label, url, ctx) {
+  const c = B(ctx);
+  if (ctx.alt) {
+    let t = inline(title, c).replace('edite e gere o vídeo', `<span style="font-family:'Instrument Serif',serif;font-style:italic;font-weight:400">edite e gere o vídeo</span>`);
+    return `<div style="margin-top:48px;border-radius:16px;padding:clamp(24px,5vw,32px);text-align:center;background:${BLUE};color:#fff">${title ? `<p style="font-size:clamp(24px,4vw,30px);font-weight:800;line-height:1.25;margin:0 0 12px;color:#fff">${t}</p>` : ''}${mids.map(m => `<p style="margin:0 0 24px;color:#fff">${inline(m, c)}</p>`).join('')}${btnHtml(esc(label), url, ctx, true)}</div>`;
+  }
+  return `<div style="margin:48px 0;border-radius:16px;padding:clamp(24px,6vw,40px);text-align:center;background:${BLUE}">${title ? `<p style="font-size:20px;font-weight:600;color:#fff;margin:0 0 8px">${inline(title, c)}</p>` : ''}${mids.map(m => `<p style="color:#fff;margin:0 0 24px;line-height:1.6">${inline(m, c)}</p>`).join('')}${btnHtml(esc(label), url, ctx, true)}</div>`;
+}
+function tipBox(t, ctx) {
+  return `<div style="margin:32px 0;border-radius:12px;border-left:4px solid #fff;padding:24px;background:${BLUE}"><div style="display:flex;gap:12px">${ICO.bulb}<p style="color:#fff;line-height:1.625;margin:0">${inline(t, B(ctx))}</p></div></div>`;
+}
+const isFence = x => x.trim().startsWith('```');
+const LINK_RE = /^\[(?:⟦botão: )?([^⟧\]]+?)⟧?\]\(([^)]+)\)$/;
+
+function renderBlock(inner, ctx) {
+  const ne = inner.filter(x => x.trim()).map(x => x.trim());
+  const first = ne[0] || '';
+  const cm = first.match(/^(.*?)⟦botão: ([^⟧]+)⟧$/);
+  if (cm && ne[1] && ne[1].startsWith('```')) {
+    const k = inner.findIndex(isFence);
+    let e = k + 1; const code = [];
+    while (e < inner.length && !isFence(inner[e])) { code.push(inner[e]); e++; }
+    let html = codeCard(cm[1].trim(), cm[2].trim(), code.join('\n'), ctx);
+    const rest = inner.slice(e + 1);
+    if (rest.some(x => x.trim())) html += parseBody(rest, ctx);
+    return { type: 'code', html };
+  }
+  const last = ne[ne.length - 1] || '';
+  if (LINK_RE.test(last) && !first.startsWith('#') && !ne.some(x => x.startsWith(':::') || x.startsWith('```') || x.startsWith('- ') || x.startsWith('|'))) {
+    const lm = last.match(LINK_RE);
+    const title = ne.length > 1 ? first : '';
+    return { type: 'cta', html: ctaBox(title, ne.slice(1, -1), lm[1], lm[2], ctx) };
+  }
+  if (first.startsWith('#') || first.startsWith(':::')) return { type: 'wrap', html: `<div>${parseBody(inner, ctx)}</div>` };
+  if (ne.length === 1 && !first.startsWith('- ') && !first.startsWith('|')) return { type: 'tip', html: tipBox(first, ctx) };
+  const fi = inner.findIndex(x => x.trim());
+  const body = parseBody(inner.slice(fi + 1), Object.assign({}, ctx, { inCard: true, blue: true }));
+  return { type: 'card', html: `<div style="background:${BLUE};border:1px solid rgba(255,255,255,.25);border-radius:12px;padding:20px;height:100%"><div style="color:#fff;font-weight:700;font-size:18px;line-height:1.35;margin-bottom:8px">${inline(first, B(ctx))}</div>${body}</div>` };
+}
+
+function parseBody(lines, ctx) {
+  let out = '', i = 0, run = [];
+  const n = lines.length, card = !!ctx.inCard, alt = !!ctx.alt;
+  const txt = card ? '#fff' : INK, acc = card ? '#fff' : BLUE;
+  const flush = () => {
+    if (!run.length) return;
+    out += run.length > 1 ? `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px;margin:24px 0">${run.join('')}</div>` : `<div style="margin:24px 0">${run[0]}</div>`;
+    run = [];
+  };
+  const pStyle = card ? 'font-size:15px;line-height:1.65;color:#fff;margin:0 0 8px' : alt ? `font-size:17px;line-height:1.65;color:${INK};margin:0 0 24px` : `font-size:17px;line-height:1.8;color:${INK};margin:0 0 20px`;
+  while (i < n) {
+    const l = lines[i], t = l.trim();
+    if (!t) { i++; continue; }
+    if (t.startsWith(':::bloco') || t.startsWith(':::cabecalho')) {
+      let d = 1, j = i + 1, fence = false; const inner = [];
+      while (j < n) {
+        const x = lines[j].trim();
+        if (x.startsWith('```')) fence = !fence;
+        if (!fence) {
+          if (x.startsWith(':::bloco') || x.startsWith(':::cabecalho')) d++;
+          else if (x.startsWith(':::fim')) { d--; if (d === 0) break; }
+        }
+        inner.push(lines[j]); j++;
+      }
+      i = j + 1;
+      if (t.startsWith(':::cabecalho')) continue;
+      const r = renderBlock(inner, ctx);
+      if (r.type === 'card') { run.push(r.html); continue; }
+      flush(); out += r.html; continue;
+    }
+    if (t.startsWith(':::fim')) { i++; continue; }
+    flush();
+    if (t.startsWith('[TEMPLATE')) { i++; continue; }
+    if (t.startsWith('```')) {
+      const code = []; i++;
+      while (i < n && !isFence(lines[i])) { code.push(lines[i]); i++; }
+      i++; out += codeCard('', '', code.join('\n'), ctx); continue;
+    }
+    let m;
+    if ((m = t.match(/^(#{1,6}) (.*)$/))) {
+      const lv = m[1].length, tx = inline(m[2], ctx);
+      if (lv <= 2) {
+        if (card) out += `<h2 style="color:#fff;font-size:20px;font-weight:700;margin:4px 0 8px">${tx}</h2>`;
+        else if (alt) out += `<h2 data-h2 style="font-size:24px;font-weight:800;margin:0 0 16px;color:#0a0a0a">${tx}</h2>`;
+        else out += `<div data-h2 style="margin:56px 0 20px"><div style="width:40px;height:3px;background:${BLUE};margin-bottom:16px"></div><h2 style="font-size:24px;font-weight:700;color:#0a0a0a;margin:0;line-height:1.3">${tx}</h2></div>`;
+      } else if (lv === 3) {
+        out += card ? `<h3 style="color:#fff;font-size:16px;font-weight:700;margin:4px 0 6px">${tx}</h3>` : `<h3 style="color:${BLUE};font-size:18px;font-weight:600;margin:32px 0 12px;line-height:1.4">${tx}</h3>`;
+      } else out += `<h4 style="color:${card ? '#fff' : '#0a0a0a'};font-size:16px;font-weight:600;margin:20px 0 8px">${tx}</h4>`;
+      i++; continue;
+    }
+    if (t.startsWith('|')) {
+      const rows = [];
+      while (i < n && lines[i].trim().startsWith('|')) { rows.push(lines[i].trim()); i++; }
+      const cells = r => r.replace(/^\|/, '').replace(/\|$/, '').split('|').map(c => c.trim());
+      const body = rows.filter((r, k) => !(k === 1 && /^[\s|:-]+$/.test(r)));
+      const head = cells(body[0]), bc = B(ctx);
+      out += `<div style="margin:24px 0;overflow-x:auto;border-radius:12px;background:${BLUE}"><table style="width:100%;border-collapse:collapse;font-size:14px;line-height:1.5"><thead><tr>${head.map(h => `<th style="text-align:left;padding:12px 14px;background:${DARK};color:#fff;font-weight:600">${inline(h, bc)}</th>`).join('')}</tr></thead><tbody>${body.slice(1).map((r, k) => `<tr>${cells(r).map(c => `<td style="padding:12px 14px;color:#fff;vertical-align:top;border-top:1px solid rgba(255,255,255,.25)">${inline(c, bc)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+      continue;
+    }
+    if (t.startsWith('- ')) {
+      const items = [];
+      while (i < n && lines[i].trim().startsWith('- ')) { items.push(lines[i].trim().slice(2)); i++; }
+      if (items.every(x => x.startsWith('→'))) {
+        out += `<ul style="list-style:none;padding:0;margin:0 0 12px;display:flex;flex-direction:column;gap:8px">${items.map(x => `<li style="display:flex;gap:8px;line-height:1.65;color:${txt}"><span style="color:${acc}">→</span><span>${inline(x.slice(1).trim(), ctx)}</span></li>`).join('')}</ul>`;
+      } else if (card || alt) {
+        out += `<ul style="list-style:none;padding:0;margin:0 0 12px;display:flex;flex-direction:column;gap:6px">${items.map(x => `<li style="display:flex;gap:8px;line-height:1.6;font-size:15px;color:${txt}"><span style="color:${acc}">•</span><span>${inline(x.replace(/^→/, ''), ctx)}</span></li>`).join('')}</ul>`;
+      } else {
+        const bc = B(ctx);
+        out += `<div style="background:${BLUE};border-radius:12px;padding:clamp(20px,5vw,32px);margin:24px 0 32px"><ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:16px">${items.map(x => `<li style="display:flex;align-items:flex-start;gap:12px">${ICO.check}<span style="color:#fff;line-height:1.6">${inline(x.replace(/^→/, ''), bc)}</span></li>`).join('')}</ul></div>`;
+      }
+      continue;
+    }
+    if (/^\d+\.\s/.test(t)) {
+      const items = [];
+      while (i < n && /^\d+\.\s/.test(lines[i].trim())) { items.push(lines[i].trim().replace(/^\d+\.\s*/, '').replace(/^\d+\.\s*/, '')); i++; }
+      out += `<ol style="list-style:none;padding:0;margin:0 0 ${alt ? 40 : 24}px;display:flex;flex-direction:column;gap:12px">${items.map((x, k) => `<li style="display:flex;align-items:flex-start;gap:12px"><span style="font-family:ui-monospace,Menlo,monospace;font-size:14px;margin-top:3px;flex-shrink:0;font-weight:700;color:${acc}">${k + 1}.</span><span style="font-size:${card ? 15 : 17}px;line-height:1.65;color:${txt}">${inline(x, ctx)}</span></li>`).join('')}</ol>`;
+      continue;
+    }
+    if (t.startsWith('> ')) {
+      const q = [];
+      while (i < n && lines[i].trim().startsWith('> ')) { q.push(lines[i].trim().slice(2)); i++; }
+      out += `<blockquote style="margin:20px 0;padding:12px 20px;border-left:3px solid ${BLUE};background:rgba(0,86,226,.08);border-radius:0 8px 8px 0;color:${INK};font-style:italic;line-height:1.7">${q.map(x => inline(x, ctx)).join('<br>')}</blockquote>`;
+      continue;
+    }
+    if (t === '---') { out += '<hr style="border:0;border-top:1px solid rgba(0,0,0,.15);margin:40px 0">'; i++; continue; }
+    if (LINK_RE.test(t) && t.includes('⟦')) { const lm = t.match(LINK_RE); out += `<div style="margin:24px 0">${btnHtml(esc(lm[1]), lm[2], ctx, !!ctx.blue)}</div>`; i++; continue; }
+    if (t.startsWith('**Também:**')) { out += `<p style="font-size:14px;color:#52525b;margin:0 0 8px"><strong style="color:${INK}">Também:</strong>${inline(t.slice(11), ctx)}</p>`; i++; continue; }
+    out += `<p style="${pStyle}">${inline(t, ctx)}</p>`; i++;
+  }
+  flush();
+  return out;
+}
+
+function parsePosts(txt) {
+  const chunks = txt.split(/\n(?=## POST \d+ — )/).filter(c => c.startsWith('## POST'));
+  return chunks.map(c => {
+    const lines = c.split('\n');
+    const hm = lines[0].match(/^## POST (\d+) — (.*)$/);
+    const meta = {}; let k = 1;
+    for (; k < lines.length; k++) {
+      if (lines[k].startsWith('### Corpo do post')) break;
+      const mm = lines[k].match(/^- ([^:]+): (.*)$/);
+      if (mm) meta[mm[1].trim()] = mm[2].trim();
+    }
+    let body = lines.slice(k + 1);
+    while (body.length && (!body[body.length - 1].trim() || body[body.length - 1].trim() === '---')) body.pop();
+    const datas = (meta['Data no card'] || '').split(' | Data na página: ');
+    const tocRaw = meta['Índice "Neste artigo" (gerado automaticamente a partir dos H2)'] || '';
+    const toc = /sem índice/.test(tocRaw) || !tocRaw ? [] : tocRaw.split(' · ').map(x => x.trim().replace(/^\d{2}/, ''));
+    const url = (meta['URL'] || '').replace(/`/g, '');
+    const alt = /ALTERNATIVO/.test(meta['Template'] || '');
+    const altHead = alt ? buildAlt(body) : null;
+    const time = (meta['Tempo de leitura'] || '').split(' (')[0];
+    return {
+      num: +hm[1], title: hm[2].trim(), slug: url.replace(/^\/blog\//, ''), cat: meta['Categoria'] || '',
+      date: datas[0], datePage: datas[1] || datas[0], time, timeLong: time + ' de leitura',
+      summary: meta['Resumo do card'] || '', tabTitle: meta['Título da aba'] || hm[2] + ' | NX Digital',
+      toc, alt, altHead, body
+    };
+  });
+}
+
+function buildAlt(body){
+  const s=body.findIndex(x=>x.trim().startsWith(':::cabecalho'));
+  if(s<0)return {chips:[],h1a:'',h1b:'',lead:''};
+  const e=body.findIndex((x,q)=>q>s&&x.trim().startsWith(':::fim'));
+  const hl=body.slice(s+1,e).map(x=>x.trim()).filter(Boolean);
+  const chipLine=hl.find(x=>x.startsWith('**'))||'';
+  const chips=[];chipLine.replace(/\*\*([^*]+)\*\*([^*]*)/g,(m,b,r)=>{chips.push({b,r});return m;});
+  const h1=(hl.find(x=>x.startsWith('# '))||'').slice(2);
+  const cut=h1.indexOf('. ');
+  const lead=hl.filter(x=>!x.startsWith('[')&&!x.startsWith('**')&&!x.startsWith('# ')).join(' ');
+  return {chips,h1a:cut>-1?h1.slice(0,cut+1):h1,h1b:cut>-1?h1.slice(cut+2):'',lead};
+}
+
+class Component extends DCLogic {
+  state = { posts: null, route: '', query: '', prog: 0, copied: false };
+  componentDidMount() {
+    this.onHash = () => { this.setState({ route: this.getRoute() }); window.scrollTo(0, 0); };
+    window.addEventListener('hashchange', this.onHash);
+    this.onScroll = () => {
+      if (this.raf) return;
+      this.raf = requestAnimationFrame(() => {
+        this.raf = null;
+        const h = document.documentElement.scrollHeight - window.innerHeight;
+        const p = h > 0 ? Math.min(100, Math.max(0, (window.scrollY / h) * 100)) : 0;
+        if (Math.abs(p - this.state.prog) > 0.4) this.setState({ prog: p });
+      });
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    this.setState({ route: this.getRoute() });
+    Promise.all(['conteudo/posts-01-a-23.md', 'conteudo/posts-24-a-46.md'].map(f => fetch(f).then(r => r.text())))
+      .then(([a, b]) => this.setState({ posts: parsePosts(a).concat(parsePosts(b)).sort((x, y) => x.num - y.num) }))
+      .catch(e => console.error('Falha ao carregar conteúdo', e));
+  }
+  componentWillUnmount() {
+    window.removeEventListener('hashchange', this.onHash);
+    window.removeEventListener('scroll', this.onScroll);
+  }
+  getRoute() {
+    if (location.hash.startsWith('#/blog')) return location.hash;
+    const m = location.pathname.match(/\/blog\/([^/.]+)\/?$/);
+    return m ? '#/blog/' + m[1] : location.hash;
+  }
+  currentPost() {
+    const m = (this.state.route || '').match(/^#\/blog\/(.+)$/);
+    if (!m || !this.state.posts) return null;
+    return this.state.posts.find(p => p.slug === decodeURIComponent(m[1])) || null;
+  }
+  fillBody() {
+    const el = this.bodyEl, p = this.currentPost();
+    if (!el || !p || el.dataset.slug === p.slug) return;
+    el.innerHTML = parseBody(p.body, { alt: p.alt });
+    el.dataset.slug = p.slug;
+  }
+  bodyRef = el => { this.bodyEl = el; this.fillBody(); };
+  componentDidUpdate() {
+    this.fillBody();
+    const p = this.currentPost();
+    const t = p ? p.tabTitle : 'Blog | NX Digital', d = p ? p.summary : 'Artigos sobre automação com IA, agentes inteligentes e estratégias para escalar sua empresa. Por NX Digital.';
+    document.title = t;
+    const setM = (sel, v) => { const m = document.querySelector(sel); if (m) m.setAttribute('content', v); };
+    setM('meta[name="description"]', d); setM('meta[property="og:title"]', t); setM('meta[property="og:description"]', d); setM('meta[name="twitter:title"]', t);
+    const u = p ? this.pageUrl(p.slug) : 'https://ia.gruponxdigital.com/blog';
+    setM('meta[property="og:url"]', u); const cn = document.querySelector('link[rel="canonical"]'); if (cn) cn.setAttribute('href', u);
+  }
+  onBodyClick = e => {
+    const b = e.target.closest && e.target.closest('[data-copy]');
+    if (!b) return;
+    const card = b.closest('[data-card]');
+    const code = card && card.querySelector('code');
+    if (!code) return;
+    const done = () => { const s = b.querySelector('[data-lbl]'); if (!s) return; s.textContent = 'Copiado!'; setTimeout(() => { s.textContent = b.dataset.copy; }, 2000); };
+    if (navigator.clipboard) navigator.clipboard.writeText(code.textContent).then(done, done); else done();
+  };
+  pageUrl(slug) { return 'https://ia.gruponxdigital.com/blog/' + slug; }
+  copyLink = () => {
+    const p = this.currentPost(); if (!p) return;
+    const done = () => { this.setState({ copied: true }); setTimeout(() => this.setState({ copied: false }), 2000); };
+    if (navigator.clipboard) navigator.clipboard.writeText(this.pageUrl(p.slug)).then(done, done); else done();
+  };
+  renderVals() {
+    const posts = this.state.posts || [], p = this.currentPost();
+    const q = this.state.query.trim().toLowerCase();
+    const cards = posts.filter(x => !q || (x.title + ' ' + x.summary + ' ' + x.cat).toLowerCase().includes(q))
+      .map(x => ({ href: '#/blog/' + x.slug, cat: x.cat, title: x.title, summary: x.summary, date: x.date, time: x.time }));
+    const url = p ? this.pageUrl(p.slug) : '';
+    return {
+      isList: !p, isStd: !!p && !p.alt, isAlt: !!p && p.alt,
+      cards, query: this.state.query, onSearch: e => this.setState({ query: e.target.value }),
+      post: p || { cat: '', title: '', datePage: '', timeLong: '' },
+      hasToc: !!p && p.toc.length > 0,
+      toc: p ? p.toc.map((label, k) => ({ num: String(k + 1).padStart(2, '0'), label, go: () => {
+        const el = this.bodyEl ? this.bodyEl.querySelectorAll('[data-h2]')[k] : null; if (!el) return;
+        window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 24, behavior: 'smooth' });
+      } })) : [],
+      alt: (p && p.altHead) || { chips: [], h1a: '', h1b: '', lead: '' },
+      progW: this.state.prog.toFixed(1) + '%', bodyRef: this.bodyRef, onBodyClick: this.onBodyClick,
+      shareWa: p ? 'https://wa.me/?text=' + encodeURIComponent(p.title + ' — ' + url) : '',
+      shareLi: p ? 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(url) : '',
+      copyLink: this.copyLink, copyLabel: this.state.copied ? 'Link copiado!' : 'Copiar link'
+    };
+  }
+}
+</script>
+</body>
+</html>
